@@ -33,6 +33,7 @@ public class DownloadController {
     {
         Optional<Attachment> attachmentOptional = attachmentRepository.findById(id);
 
+        //Redirect back if attachment is not found
         if (attachmentOptional.isEmpty()) {
             ra.addFlashAttribute("error", "Attachment is not found!");
 

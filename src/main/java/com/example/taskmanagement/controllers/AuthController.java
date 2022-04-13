@@ -55,6 +55,7 @@ public class AuthController {
             authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(userInfo.getUsername(), loginRequest.getPassword()));
         } catch (BadCredentialsException e) {
+            //Catch bad credentials exception and return bad request status
             Result<Object> invalidUsernameOrPassword = new Result<>(ResultCodeEnum.VALIDATE_ERROR.getCode(), "Invalid username or password");
 
             return ResponseEntity.badRequest().body(invalidUsernameOrPassword);

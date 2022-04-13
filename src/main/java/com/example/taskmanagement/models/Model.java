@@ -11,6 +11,7 @@ import java.util.Date;
 @MappedSuperclass
 @Getter
 @Setter
+//Super class extended by all models because of some common fields
 abstract public class Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

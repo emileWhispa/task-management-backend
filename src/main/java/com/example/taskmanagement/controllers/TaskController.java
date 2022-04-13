@@ -56,14 +56,16 @@ public class TaskController {
             ){
 
 
+        //Check if request contains valid attachment files
         if(files == null || files.length <=0 || Arrays.stream(files).anyMatch(MultipartFile::isEmpty)){
             return ResponseEntity.badRequest().body(new Result<>(ResultCodeEnum.VALIDATE_ERROR.getCode(),"No attachment files"));
         }
 
+        //Check if valid list of assignees has been sent
         if(assignees == null || assignees.isEmpty()){
             return ResponseEntity.badRequest().body(new Result<>(ResultCodeEnum.VALIDATE_ERROR.getCode(),"No Selected assignees"));
         }
-
+        //Check if valid non-empty list of project is available
         if(projects == null || projects.isEmpty()){
             return ResponseEntity.badRequest().body(new Result<>(ResultCodeEnum.VALIDATE_ERROR.getCode(),"No Selected projects"));
         }
@@ -75,6 +77,7 @@ public class TaskController {
             for (var file : files) {
 
                 Attachment attachment = new Attachment();
+                //Generate new filename by concatenating current time milliseconds
                 String fileName = System.currentTimeMillis() + StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 
                 attachment.setName(fileName);
@@ -88,6 +91,7 @@ public class TaskController {
             return ResponseEntity.internalServerError().body(new Result<>(ResultCodeEnum.APPLICATION_ERROR.getCode(),e.getMessage()));
         }
 
+        //Find and assign projects and assignees to their many-to-many relationships
         task.setAssignees(assigneeRepository.findAllById(assignees));
         task.setProjects(projectRepository.findAllById(projects));
         task.setAttachments(attachmentList);

@@ -14,6 +14,7 @@ import java.nio.file.StandardCopyOption;
 public class FileUploadHelper {
 
 
+    //Upload File to specified directory inside uploads folder
     public static void saveFile(String uploadDir, String filename, MultipartFile multipartFile) throws IOException {
 
         Path uploadPath= Paths.get("./uploads/"+uploadDir);
